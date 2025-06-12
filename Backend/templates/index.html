@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cavehill Map</title>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="../static/index.js" defer></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../static/style.css"/>
+    <style>
+        #map { height: 98lvh; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <form>
+            <input type="text" id="search-input" name="search-query" placeholder="Where are you looking to go?">
+            <button id="search-btn" type="submit">Search</button>
+            <ul id="suggestions-list" class="suggestions"></ul>
+        </form>
+        
+    </div>
+    <div class="hamburger-menu">
+        <button id="menu-toggle" aria-label="Toggle menu">
+            ☰
+        </button>
+        <div id="menu-content" class="menu-hidden">
+            <ul>
+            <li><a href="/settings" id="settings-link">⚙️ Settings</a></li>
+            <li><a href="/account" id="account-link">👤 Account</a></li>
+            <li><a href="" id="logout-link">🚪 Logout</a></li>
+            <li><a href="/events" id="events-link">  Events</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+</body>
+</html>

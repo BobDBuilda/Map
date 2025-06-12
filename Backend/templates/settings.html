@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commuter's Map – Settings</title>
+<style>
+:root{
+  --accent:#2563eb;
+  --bg:#f9fafb;
+  --fg:#111827;
+  --card:#ffffff;
+  --muted:#6b7280;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root{
+    --bg:#0f172a;
+    --fg:#f1f5f9;
+    --card:#1e293b;
+    --muted:#94a3b8;
+  }
+}
+html,body{
+  margin:0;
+  padding:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--fg);
+}
+
+.container{
+  max-width:640px;
+  margin:0 auto;
+  padding:1rem;
+}
+
+.card{
+  background:var(--card);
+  border-radius:1rem;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+  padding:1.5rem;
+  margin-bottom:1.5rem;
+}
+
+.card h2{
+  margin-top:0;
+  font-size:1.25rem;
+  margin-bottom:.75rem;
+}
+
+.option{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:1rem;
+}
+
+.option:last-child{margin-bottom:0;}
+
+.option label{
+  font-weight:500;
+}
+
+.switch{
+  position:relative;
+  display:inline-block;
+  width:44px;
+  height:24px;
+}
+.switch input{display:none;}
+.slider{
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:#d1d5db;
+  border-radius:24px;
+  transition:.3s;
+}
+.slider:before{
+  content:"";
+  position:absolute;
+  height:20px; width:20px;
+  left:2px; bottom:2px;
+  background:#fff;
+  border-radius:50%;
+  transition:.3s;
+}
+input:checked + .slider{
+  background:var(--accent);
+}
+input:checked + .slider:before{
+  transform:translateX(20px);
+}
+
+select, input[type="range"]{
+  width:160px;
+  padding:.3rem .5rem;
+  font-size:1rem;
+  border:1px solid #d1d5db;
+  border-radius:.5rem;
+  background:var(--card);
+  color:var(--fg);
+}
+
+@media(max-width:480px){
+  .option{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .option select,
+  .option input[type="range"]{
+    width:100%;
+    margin-top:.5rem;
+  }
+}
+
+.range-value{
+  font-size:.875rem;
+  color:var(--muted);
+  margin-left:.5rem;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 style="text-align:center;margin-top:.5rem;">Settings</h1>
+
+  <form>
+
+    <div class="card">
+      <h2>Appearance</h2>
+      <div class="option">
+        <label for="theme">Theme</label>
+        <select id="theme" name="theme">
+          <option value="system">System Default</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+
+      <div class="option">
+        <label for="font">Font Size</label>
+        <div>
+          <input type="range" id="font" name="font" min="14" max="22" value="16" oninput="document.getElementById('fontVal').innerText=this.value+'px';">
+          <span id="fontVal" class="range-value">16px</span>
+        </div>
+      </div>
+
+      <div class="option">
+        <label for="colorblind">Color‑blind Mode</label>
+        <label class="switch">
+          <input type="checkbox" id="colorblind" name="colorblind">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Map & Navigation</h2>
+
+      <div class="option">
+        <label for="mapStyle">Map Style</label>
+        <select id="mapStyle" name="mapStyle">
+          <option value="street">Street</option>
+          <option value="satellite">Satellite</option>
+          <option value="terrain">Terrain</option>
+          <option value="minimal">Minimal</option>
+        </select>
+      </div>
+
+      <div class="option">
+        <label for="routePref">Route Preference</label>
+        <select id="routePref" name="routePref">
+          <option value="fastest">Fastest</option>
+          <option value="eco">Eco‑Friendly</option>
+          <option value="walking">Walking‑Only</option>
+          <option value="transit">Public Transit</option>
+        </select>
+      </div>
+
+      <div class="option">
+        <label for="avoidTolls">Avoid Tolls</label>
+        <label class="switch">
+          <input type="checkbox" id="avoidTolls" name="avoidTolls">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="option">
+        <label for="offline">Offline Maps</label>
+        <label class="switch">
+          <input type="checkbox" id="offline" name="offline">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Notifications</h2>
+      <div class="option">
+        <label for="trafficAlerts">Traffic Alerts</label>
+        <label class="switch">
+          <input type="checkbox" id="trafficAlerts" name="trafficAlerts" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="option">
+        <label for="classReminder">Class Start Reminder</label>
+        <label class="switch">
+          <input type="checkbox" id="classReminder" name="classReminder">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="option">
+        <label for="lowBattery">Low Battery Reminder</label>
+        <label class="switch">
+          <input type="checkbox" id="lowBattery" name="lowBattery" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Privacy</h2>
+      <div class="option">
+        <label for="shareLocation">Share Live Location with Friends</label>
+        <label class="switch">
+          <input type="checkbox" id="shareLocation" name="shareLocation">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="option">
+        <label for="analytics">Send Anonymous Usage Analytics</label>
+        <label class="switch">
+          <input type="checkbox" id="analytics" name="analytics" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin:2rem 0;">
+      <button type="submit" style="background:var(--accent);color:#fff;border:none;padding:.75rem 2rem;font-size:1rem;border-radius:.75rem;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);">Save Changes</button>
+    </div>
+
+  </form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  alert('Settings saved!');
+});
+</script>
+
+</body>
+</html>
