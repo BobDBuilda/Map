@@ -1,4 +1,3 @@
-#import re
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point
@@ -6,7 +5,20 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS 
 from flask_socketio import SocketIO, emit
 from rapidfuzz import fuzz
-import osmnx as ox, networkx as nx
+from pymongo.mongo_client import MongoClient 
+
+uri = "mongodb+srv://root:nobodyguessit@map.vqlmm4n.mongodb.net/?retryWrites=true&w=majority&appName=Map"
+
+# Create a new client and connect to the server
+client = MongoClient(uri)
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
 
 server = Flask(__name__, static_folder='static') 
 server.config['SECRET KEY'] = 'secret'
@@ -46,7 +58,7 @@ def search():
     try:
         data = pd.read_csv("Buildings.csv")
         for index, row in data.iterrows():
-            score = fuzz.ratio(query, row['Building Name'].lower())
+            score = fuzz.ratio(query, row['Name'].lower())
             if score > best_score:
                 best_score = score
                 best_match = row
@@ -54,16 +66,16 @@ def search():
         if best_score < 20:
             return jsonify({'error': 'no good match found'}), 404
 
-        print(f"this is some data: {best_match['Building Name']}")
+        print(f"this is some data: {best_match['Name']}")
         return jsonify({
-            'name': best_match['Building Name'],
+            'name': best_match['Name'],
             'lat': best_match['Latitude'],
             'lon': best_match['Longitude'],
             'score': best_score
         })
-            #if row['Building Name'].lower() == search_query.lower(): 
+            #if row['Name'].lower() == search_query.lower(): 
              #   try:
-             #       building = row['Building Name']
+             #       building = row['Name']
               #      lat = float(row['Latitude'])
               #      lng = float(row['Longitude'])
               #      print("after try block")
